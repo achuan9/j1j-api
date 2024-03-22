@@ -6,20 +6,20 @@ import type { Request, Response } from "express";
 
 @controller('/user')
 export class UserController {
-   
+
     constructor(@inject(UserService) private readonly userService: UserService) {
-        
+
     }
 
     @GetMapping('/list')
-    public getList(req: Request, res: Response) {
-        const result =  this.userService.getList();
+    public async getList(req: Request, res: Response) {
+        const result = await this.userService.getList();
         res.send(result);
     }
 
     @PostMapping('/create')
-    public createUser(req: Request, res: Response) {
-        const result = this.userService.createUser();
+    public async createUser(req: Request, res: Response) {
+        const result = await this.userService.createUser(req.body);
         res.send(result);
     }
 }
