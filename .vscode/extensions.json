@@ -2,6 +2,7 @@
     "recommendations": [
         "prisma.prisma",
         "cweijan.vscode-mysql-client2",
-        "humao.rest-client"
+        "humao.rest-client",
+        "codeium.codeium"
     ]
 }
