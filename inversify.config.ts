@@ -10,19 +10,19 @@ const container = new Container();
 /**
  * jwt
  */
-container.bind(JWT).to(JWT)
+container.bind(JWT).to(JWT);
 
 /**
  * 封装prismaClient
  */
 container.bind<PrismaClient>("PrismaClient").toFactory(() => {
-    return () => new PrismaClient();
-})
-container.bind(PrismaDB).to(PrismaDB)
+  return () => new PrismaClient();
+});
+container.bind(PrismaDB).to(PrismaDB);
 /**
  * user模块
  */
-container.bind(UserService).to(UserService)
-container.bind(UserController).to(UserController)
+container.bind(UserService).to(UserService);
+container.bind(UserController).to(UserController);
 
-export default container
+export default container;
