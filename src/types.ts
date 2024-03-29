@@ -8,4 +8,5 @@ export const TYPES = {
 
   /** Utils */
   Logger: Symbol.for("LoggerService "),
+  ConfigServer: Symbol.for("ConfigService"),
 };

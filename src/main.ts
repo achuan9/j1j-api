@@ -4,6 +4,8 @@ import { App } from "./app";
 import { TYPES } from "./types";
 import { ILoggerService } from "./common/ILoggerService";
 import { LoggerService } from "./common/LoggerService";
+import { IConfigService } from "./common/IConfigService";
+import { ConfigService } from "./common/ConfigService";
 
 export interface IBootstrapReturn {
   app: App;
@@ -18,6 +20,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 /** Utils */
 const utilBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<ILoggerService>(TYPES.Logger).to(LoggerService);
+  bind<IConfigService>(TYPES.ConfigServer).to(ConfigService);
 });
 
 /** Entities */
