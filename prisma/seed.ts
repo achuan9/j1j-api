@@ -1,4 +1,9 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import { hash } from "bcryptjs";
+import { config, DotenvConfigOutput, DotenvParseOutput } from "dotenv";
+
+const configResult: DotenvConfigOutput = config();
+const configParsed: DotenvParseOutput = configResult.parsed;
 
 const prisma = new PrismaClient();
 
@@ -6,6 +11,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Alice",
     email: "alice@prisma.io",
+    password: "123456",
     posts: {
       create: [
         {
@@ -17,21 +23,9 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: "Nilu",
-    email: "nilu@prisma.io",
-    posts: {
-      create: [
-        {
-          title: "Follow Prisma on Twitter",
-          content: "https://www.twitter.com/prisma",
-          published: true,
-        },
-      ],
-    },
-  },
-  {
     name: "Mahmoud",
     email: "mahmoud@prisma.io",
+    password: "123456",
     posts: {
       create: [
         {
@@ -47,10 +41,10 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
 ];
-
 async function main() {
   console.log(`Start seeding ...`);
   for (const u of userData) {
+    u.password = await hash(u.password, Number(configParsed.SALT_ROUNDS));
     const user = await prisma.user.create({
       data: u,
     });
