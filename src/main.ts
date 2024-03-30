@@ -2,21 +2,21 @@ import "reflect-metadata";
 import { Container, ContainerModule, interfaces } from "inversify";
 import { App } from "./app";
 import { TYPES } from "./types";
-import { ILoggerService } from "./common/ILoggerService";
-import { LoggerService } from "./common/LoggerService";
-import { IConfigService } from "./common/IConfigService";
-import { ConfigService } from "./common/ConfigService";
+import { ILoggerService } from "./logger/ILoggerService";
+import { LoggerService } from "./logger/LoggerService";
+import { IConfigService } from "./config/IConfigService";
+import { ConfigService } from "./config/ConfigService";
 
 import { InversifyExpressServer } from "inversify-express-utils";
 import express from "express";
-import { IUserController } from "./controller/IUserController";
-import { UserController } from "./controller/UserController";
+import { IUserController } from "./controllers/IUserController";
+import { UserController } from "./controllers/UserController";
 import { IUserService } from "./services/IUserService";
 import { UserService } from "./services/UserService";
 import { IUserRepository } from "./repositories/IUserRepository";
 import { UserRepository } from "./repositories/UserRepository";
-import { IDatabase } from "./common/IDatabase";
-import { Database } from "./common/Database";
+import { IDatabase } from "./db/IDatabase";
+import { Database } from "./db/Database";
 
 export interface IBootstrapReturn {
   app: App;
@@ -33,7 +33,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 
 /** Utils */
 const utilBindings = new ContainerModule((bind: interfaces.Bind) => {
-  bind<ILoggerService>(TYPES.Logger).to(LoggerService);
+  bind<ILoggerService>(TYPES.LoggerService).to(LoggerService);
   bind<IConfigService>(TYPES.ConfigServer).to(ConfigService);
   bind<IDatabase>(TYPES.Database).to(Database);
 });

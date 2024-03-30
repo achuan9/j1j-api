@@ -7,7 +7,7 @@ export const TYPES = {
   UserRepository: Symbol.for("UserRepository"),
 
   /** Utils */
-  Logger: Symbol.for("LoggerService "),
+  LoggerService: Symbol.for("LoggerService"),
   ConfigServer: Symbol.for("ConfigService"),
   Database: Symbol.for("Database"),
 };
