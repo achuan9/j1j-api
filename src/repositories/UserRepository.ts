@@ -1,22 +1,21 @@
-import { inject, injectable } from "inversify";
+import { injectable } from "inversify";
 import { IUserRepository } from "./IUserRepository";
-import { TYPES } from "../types";
-import { User } from "@prisma/client";
-import { UserRegisterDto } from "../dto/UserRegisterDto";
-import { IDatabase } from "../common/IDatabase";
+import { BaseRepository } from "./BaseRepository";
+import { Prisma, User } from "@prisma/client";
 
 @injectable()
-export class UserRepository implements IUserRepository {
-  constructor(@inject(TYPES.Database) private database: IDatabase) {}
+export class UserRepository
+  extends BaseRepository<User, Prisma.UserCreateInput, Prisma.UserUpdateInput>
+  implements IUserRepository
+{
+  constructor() {
+    super(Prisma.ModelName.User);
+  }
 
-  find(
-    email: string
-  ): Promise<{ id: number; email: string; name: string; password: string }> {
-    return this.database.client.user.findUnique({
+  public async findByEmail(email: string): Promise<User | null> {
+    const result = await this.prismaService.client.user.findFirst({
       where: { email },
     });
-  }
-  create(user: UserRegisterDto): Promise<User> {
-    throw new Error("Method not implemented.");
+    return result;
   }
 }

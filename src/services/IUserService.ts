@@ -2,8 +2,8 @@ import { UserLoginDto } from "../dto/UserLoginDto";
 import { UserRegisterDto } from "../dto/UserRegisterDto";
 import { User } from "@prisma/client";
 export interface IUserService {
-  createUser(user: UserRegisterDto): Promise<User>;
+  register(user: UserRegisterDto): Promise<User>;
   login(loginInfo: UserLoginDto): Promise<boolean>;
-  getUserInfo(email: string): Promise<User>;
+  getUserInfo(userId: User["id"]): Promise<User>;
   validatePassword(password: string, hashedPassword: string): boolean;
 }

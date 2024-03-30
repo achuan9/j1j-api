@@ -1,24 +1,27 @@
 import { PrismaClient } from "@prisma/client";
-import { IDatabase } from "./IDatabase";
+import { IPrismaService } from "./IPrismaService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../types";
-import { ILoggerService } from "./ILoggerService";
+import { ILoggerService } from "../logger/ILoggerService";
 
 @injectable()
-export class Database implements IDatabase {
+export class PrismaService implements IPrismaService {
+  @inject(TYPES.LoggerService) private readonly loggerService: ILoggerService;
   public client: PrismaClient;
 
-  constructor(@inject(TYPES.Logger) private _logger: ILoggerService) {
+  constructor() {
     this.client = new PrismaClient();
   }
 
   public async connect(): Promise<void> {
     try {
       await this.client.$connect();
-      this._logger.log(`[PrismaService] Successfuly connected to database`);
+      this.loggerService.log(
+        `[PrismaService] Successfuly connected to database`
+      );
     } catch (e) {
       if (e instanceof Error) {
-        this._logger.error(
+        this.loggerService.error(
           `[PrismaService] Error while connection to database` + e.message
         );
       }
@@ -27,6 +30,8 @@ export class Database implements IDatabase {
 
   public async disconnect(): Promise<void> {
     await this.client.$disconnect();
-    this._logger.log(`[PrismaService] Successfuly disconnected from database`);
+    this.loggerService.log(
+      `[PrismaService] Successfuly disconnected from database`
+    );
   }
 }

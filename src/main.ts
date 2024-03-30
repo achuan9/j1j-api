@@ -15,8 +15,8 @@ import { IUserService } from "./services/IUserService";
 import { UserService } from "./services/UserService";
 import { IUserRepository } from "./repositories/IUserRepository";
 import { UserRepository } from "./repositories/UserRepository";
-import { IDatabase } from "./db/IDatabase";
-import { Database } from "./db/Database";
+import { IPrismaService } from "./db/IPrismaService";
+import { PrismaService } from "./db/PrismaService";
 
 export interface IBootstrapReturn {
   app: App;
@@ -35,7 +35,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 const utilBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<ILoggerService>(TYPES.LoggerService).to(LoggerService);
   bind<IConfigService>(TYPES.ConfigServer).to(ConfigService);
-  bind<IDatabase>(TYPES.Database).to(Database);
+  bind<IPrismaService>(TYPES.PrismaService).to(PrismaService);
 });
 
 /** Entities */
@@ -57,6 +57,7 @@ async function bootstrap() {
     // app.use(container.get(JWT).init());
   });
   const app = server.build();
+  // await this._prismaService.connect();
   app.listen(8000, () => {
     console.log(`Server listening on port ${8000}`);
   });

@@ -2,14 +2,14 @@ import { inject, injectable } from "inversify";
 import { config, DotenvConfigOutput, DotenvParseOutput } from "dotenv";
 
 import { IConfigService } from "./IConfigService";
-import { ILoggerService } from "./ILoggerService";
+import { ILoggerService } from "../logger/ILoggerService";
 import { TYPES } from "../types";
 
 @injectable()
 export class ConfigService implements IConfigService {
   private _config: DotenvParseOutput;
 
-  constructor(@inject(TYPES.Logger) private _logger: ILoggerService) {
+  constructor(@inject(TYPES.LoggerService) private _logger: ILoggerService) {
     const result: DotenvConfigOutput = config();
 
     if (result.error) {

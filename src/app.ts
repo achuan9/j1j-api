@@ -1,21 +1,27 @@
-import express, { Express } from "express";
+import express, { Application } from "express";
 import { Server } from "http";
-import { inject, injectable } from "inversify";
+import { Container, inject, injectable } from "inversify";
 import { TYPES } from "./types";
-import { ILoggerService } from "./common/ILoggerService";
+import { ILoggerService } from "./logger/ILoggerService";
+import { InversifyExpressServer } from "inversify-express-utils";
 
 @injectable()
 export class App {
-  app: Express;
+  app: Application;
   server: Server;
   port: number = 8000;
 
-  constructor(@inject(TYPES.Logger) private readonly logger: ILoggerService) {
-    this.app = express();
-  }
+  constructor(
+    @inject(TYPES.LoggerService) private readonly logger: ILoggerService
+  ) {}
 
-  initialize() {
-    this.app.use(express.json());
+  initialize(container: Container) {
+    const server = new InversifyExpressServer(container);
+    server.setConfig(app => {
+      app.use(express.json());
+      // app.use(container.get(JWT).init());
+    });
+    this.app = server.build();
     this.server = this.app.listen(this.port, () => {
       this.logger.log(`Server listening on port ${this.port}`);
     });

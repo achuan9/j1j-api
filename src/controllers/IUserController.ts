@@ -1,5 +1,5 @@
 import { NextFunction } from "express";
-import { BaseController } from "../common/BaseController";
+import { BaseController } from "./BaseController";
 import type { Request, Response } from "express";
 
 export interface IUserController extends BaseController {

@@ -5,7 +5,8 @@ import { ILoggerService } from "../logger/ILoggerService";
 
 @injectable()
 export abstract class BaseController {
-  @inject(TYPES.LoggerService) protected readonly loggerService: ILoggerService;
+  @inject(TYPES.LoggerService)
+  protected readonly loggerService: ILoggerService;
 
   protected send<T>(res: Response, code: number, message: T): Response {
     return res.status(code).json(message);

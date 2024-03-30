@@ -9,5 +9,5 @@ export const TYPES = {
   /** Utils */
   LoggerService: Symbol.for("LoggerService"),
   ConfigServer: Symbol.for("ConfigService"),
-  Database: Symbol.for("Database"),
+  PrismaService: Symbol.for("PrismaService"),
 };

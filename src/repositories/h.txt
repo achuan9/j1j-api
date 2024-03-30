@@ -1,0 +1,12 @@
+
+Repository则是来源于领域驱动设计（DDD）的概念，它更看重业务概念，通常对应一个聚合根（Aggregate Root）。
+Repository提供查找和持久化聚合对象的方法，这些方法更倾向于涵盖业务操作。
+通常Repository接口的方法名都是业务驱动的，如findUnassignedTasks()，getActiveUsers()等。
+
+
+DAO和Repository的目标都是为了使业务逻辑从数据访问中解耦，使之更专注于处理核心业务。
+
+DAO（Data Access Object，数据访问对象）和Repository（仓库）在某些情况下确实有很大的相似性，
+它们都是用于封装数据访问逻辑，将数据访问与业务逻辑分离。然而，它们在设计理念上存在一定的差异。
+DAO主要是为了封装底层的数据访问细节，例如SQL语句、数据连接等。
+DAO通常对应数据库的一张表，并提供增删改查等基本操作。

@@ -1,0 +1,56 @@
+/Users/achuang/work/nodejs/MoneyWiz
+├── README.md
+├── nodemon.json
+├── output.txt
+├── package-lock.json
+├── package.json
+├── prisma
+|  ├── dev.db
+|  ├── migrations
+|  |  ├── 20240329144843_init
+|  |  └── migration_lock.toml
+|  ├── schema.prisma
+|  └── seed.ts
+├── src
+|  ├── app.ts
+|  ├── common
+|  |  ├── BaseController.ts
+|  |  ├── IJWTService.ts
+|  |  └── JWTService.ts
+|  ├── config
+|  |  ├── ConfigService.ts
+|  |  └── IConfigService.ts
+|  ├── controller
+|  |  ├── IUserController.ts
+|  |  └── UserController.ts
+|  ├── db
+|  |  ├── Database.ts
+|  |  └── IDatabase.ts
+|  ├── dto
+|  |  ├── UserLoginDto.ts
+|  |  ├── UserRegisterDto.ts
+|  |  └── h.txt
+|  ├── jwt
+|  |  └── index.ts
+|  ├── logger
+|  |  ├── ILoggerService.ts
+|  |  └── LoggerService.ts
+|  ├── main.ts
+|  ├── repositories
+|  |  ├── IUserRepository.ts
+|  |  ├── UserRepository.ts
+|  |  └── h.txt
+|  ├── services
+|  |  ├── IUserService.ts
+|  |  ├── UserService.ts
+|  |  └── h.txt
+|  ├── tests
+|  |  └── user.http
+|  └── types.ts
+├── tsconfig.json
+└── types
+   └── custom.d.ts
+
+directory: 446 file: 1109
+
+ignored: directory (6)
