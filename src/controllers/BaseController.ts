@@ -1,12 +1,12 @@
 import type { Response } from "express";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../types";
 import { ILoggerService } from "../logger/ILoggerService";
+import { TYPES } from "../types";
 
 @injectable()
 export abstract class BaseController {
   @inject(TYPES.LoggerService)
-  protected readonly loggerService: ILoggerService;
+  protected readonly _logger: ILoggerService;
 
   protected send<T>(res: Response, code: number, message: T): Response {
     return res.status(code).json(message);
@@ -33,7 +33,7 @@ export abstract class BaseController {
   }
 
   protected fail(res: Response, error: Error | string): Response {
-    this.loggerService.error(error);
+    this._logger.error(error);
     return res.status(500).json({ message: error.toString() });
   }
 }

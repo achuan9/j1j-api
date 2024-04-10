@@ -12,11 +12,11 @@ import { User } from "@prisma/client";
 @injectable()
 export class UserService implements IUserService {
   @inject(TYPES.UserRepository)
-  private readonly userRepository: IUserRepository;
+  private readonly _userRepository: IUserRepository;
 
-  @inject(TYPES.ConfigServer) private readonly configServer: IConfigService;
+  @inject(TYPES.ConfigService) private readonly _config: IConfigService;
 
-  @inject(TYPES.LoggerService) private readonly loggerService: ILoggerService;
+  @inject(TYPES.LoggerService) private readonly _logger: ILoggerService;
   constructor() {}
 
   validatePassword(password: string, hashedPassword: string): boolean {
@@ -25,22 +25,19 @@ export class UserService implements IUserService {
 
   public async register(userData: UserRegisterDto): Promise<User> {
     const { email, password, name } = userData;
-    const existingUser = await this.userRepository.findByEmail(email);
+    const existingUser = await this._userRepository.findByEmail(email);
 
     if (existingUser) {
-      this.loggerService.log(`邮箱为 ${email} 的用户已经存在了`);
+      this._logger.log(`邮箱为 ${email} 的用户已经存在了`);
       throw new Error("用户已经存在了");
     }
-    this.loggerService.debug(
-      password,
-      this.configServer.getConfig("SALT_ROUNDS")
-    );
+    this._logger.debug(password, this._config.getConfig("SALT_ROUNDS"));
     const hashedPassword = await hash(
       password,
-      this.configServer.getConfig("SALT_ROUNDS")
+      Number(this._config.getConfig("SALT_ROUNDS"))
     );
 
-    const result = await this.userRepository.create({
+    const result = await this._userRepository.create({
       email,
       name,
       password: hashedPassword,
@@ -50,8 +47,8 @@ export class UserService implements IUserService {
   }
 
   async login({ email, password }: UserLoginDto): Promise<boolean> {
-    const existedUser = await this.userRepository.findByEmail(email);
-    this.loggerService.log(`邮箱为 ${email} 的用户不存在`);
+    const existedUser = await this._userRepository.findByEmail(email);
+    this._logger.log(`邮箱为 ${email} 的用户不存在`);
     if (!existedUser) {
       throw new Error("用户不存在");
     }
@@ -59,6 +56,6 @@ export class UserService implements IUserService {
   }
 
   async getUserInfo(userId: User["id"]): Promise<User> {
-    return await this.userRepository.findById(userId);
+    return await this._userRepository.findById(userId);
   }
 }

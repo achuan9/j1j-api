@@ -13,7 +13,7 @@ export class UserRepository
   }
 
   public async findByEmail(email: string): Promise<User | null> {
-    const result = await this.prismaService.client.user.findFirst({
+    const result = await this._prisma.client.user.findFirst({
       where: { email },
     });
     return result;
